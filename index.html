@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Songheng Huang — CS Undergraduate Profile">
+<meta name="description" content="Songheng Huang — CS Undergraduate Profile | 黄松恒 — 计算机本科生个人主页">
 <title>Songheng Huang — Profile</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,12 +35,17 @@
   html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 
   body {
-    font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC','Microsoft YaHei','Hiragino Sans GB',sans-serif;
     background: var(--bg);
     color: var(--text);
     line-height: 1.75;
     -webkit-font-smoothing: antialiased;
   }
+
+  /* ── LANGUAGE VISIBILITY ── */
+  [lang] { display: none; }
+  html[lang="en"] [lang="en"],
+  html[lang="zh"] [lang="zh"] { display: revert; }
 
   /* ── NAV ───────────────────── */
   .nav {
@@ -53,9 +58,10 @@
   .nav-inner {
     max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
     display: flex; align-items: center; justify-content: space-between; height: 60px;
+    gap: 16px;
   }
   .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--primary); letter-spacing: -.01em; }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links { display: flex; gap: 28px; list-style: none; align-items: center; }
   .nav-links a {
     text-decoration: none; color: var(--text-2); font-size: .85rem; font-weight: 500;
     transition: color .25s; position: relative;
@@ -66,6 +72,16 @@
     background: var(--primary); border-radius: 1px; transition: width .3s;
   }
   .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+
+  .lang-toggle {
+    background: var(--primary-lt); color: var(--primary);
+    border: 1px solid var(--border); padding: 5px 14px;
+    border-radius: 99px; font-size: .78rem; font-weight: 600;
+    cursor: pointer; transition: background .2s, color .2s;
+    font-family: inherit; white-space: nowrap;
+  }
+  .lang-toggle:hover { background: var(--accent-lt); }
+
   .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
   .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: .25s; }
 
@@ -156,11 +172,12 @@
   /* ── PROJECTS ──────────────── */
   .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
   .project-card {
+    display: block;
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 28px; box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s;
-    cursor: default;
+    padding: 28px; box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s, border-color .3s;
+    text-decoration: none; color: inherit; cursor: pointer;
   }
-  .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
   .project-card .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
   .project-card .tag {
     padding: 3px 10px; border-radius: 99px; font-size: .7rem; font-weight: 600;
@@ -183,7 +200,6 @@
     align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
   }
   .ci-icon.email    { background: var(--primary-lt); }
-  .ci-icon.linkedin { background: var(--accent-lt); }
   .ci-icon.github   { background: #f3f4f0; }
   .ci-icon.location { background: #f0f5ef; }
   .ci-label  { font-size: .73rem; color: var(--text-3); }
@@ -233,12 +249,13 @@
   <div class="nav-inner">
     <div class="nav-logo">SH</div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#education">Education</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a href="#about"><span lang="en">About</span><span lang="zh">关于</span></a></li>
+      <li><a href="#skills"><span lang="en">Skills</span><span lang="zh">技能</span></a></li>
+      <li><a href="#education"><span lang="en">Education</span><span lang="zh">学习经历</span></a></li>
+      <li><a href="#projects"><span lang="en">Projects</span><span lang="zh">项目</span></a></li>
+      <li><a href="#contact"><span lang="en">Contact</span><span lang="zh">联系</span></a></li>
     </ul>
+    <button class="lang-toggle" id="langToggle" aria-label="Switch language">中文</button>
     <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -248,49 +265,61 @@
 <!-- ═══════════ HERO ═══════════ -->
 <header class="hero">
   <div class="hero-avatar">SH</div>
-  <h1>Songheng <span>Huang</span></h1>
+  <h1><span lang="en">Songheng</span><span lang="zh">松恒</span> <span>Huang</span></h1>
   <p class="tagline">
-    Third-year CS undergraduate with a sharp eye for detail and a drive to build things that matter.
-    Bilingual in Chinese and English. Currently seeking hands-on opportunities in AI data annotation and software development.
+    <span lang="en">Third-year CS undergraduate with a sharp eye for detail and a drive to build things that matter. Bilingual in Chinese and English. Currently seeking hands-on opportunities in AI data annotation and software development.</span>
+    <span lang="zh">计算机科学大三在读，注重细节，热衷于做有价值的项目。中英双语能力。正在寻找 AI 数据标注和软件开发方向的实践机会，在实战中持续成长。</span>
   </p>
   <div class="hero-badges">
-    <span class="badge">CS Undergraduate</span>
-    <span class="badge">CN / EN Bilingual</span>
+    <span class="badge"><span lang="en">CS Undergraduate</span><span lang="zh">计算机本科在读</span></span>
+    <span class="badge"><span lang="en">CN / EN Bilingual</span><span lang="zh">中英双语</span></span>
     <span class="badge">Python &amp; Web</span>
-    <span class="badge">Open to Opportunities</span>
+    <span class="badge"><span lang="en">Open to Opportunities</span><span lang="zh">正在寻找机会</span></span>
   </div>
 </header>
 
 <!-- ═══════════ ABOUT ═══════════ -->
 <section class="section" id="about">
   <div class="section-inner">
-    <p class="section-label">About</p>
-    <h2 class="section-title">Who I am</h2>
+    <p class="section-label"><span lang="en">About</span><span lang="zh">关于我</span></p>
+    <h2 class="section-title"><span lang="en">Who I am</span><span lang="zh">我是谁</span></h2>
     <div class="about-grid">
       <div class="about-card fade-in">
         <h3>Songheng Huang</h3>
-        <p class="meta">Computer Science Undergraduate</p>
+        <p class="meta"><span lang="en">Computer Science Undergraduate</span><span lang="zh">计算机科学 本科生</span></p>
         <div class="info-rows">
           <div class="info-row"><span class="icon">@</span> shizhimen@gmail.com</div>
-          <div class="info-row"><span class="icon">#</span> Zhongshan, Guangdong, China</div>
+          <div class="info-row"><span class="icon">#</span> <span lang="en">Zhongshan, Guangdong, China</span><span lang="zh">中国广东中山</span></div>
           <div class="info-row"><span class="icon">⌹</span> github.com/lklkmcgill</div>
         </div>
       </div>
       <div class="about-text fade-in">
-        <p>
+        <p lang="en">
           I'm a <strong>third-year Computer Science student</strong> based in Zhongshan, China.
           I spend most of my time honing programming fundamentals, exploring how AI models are trained,
           and building small but functional projects that solve real problems.
         </p>
-        <p>
+        <p lang="zh">
+          我是一名<strong>计算机科学大三学生</strong>，坐标广东中山。
+          日常大部分时间都在打磨编程基本功、研究 AI 模型的训练机制、以及动手做一些能解决实际问题的小项目。
+        </p>
+        <p lang="en">
           I care a lot about <strong>getting the details right</strong> — whether it's writing clean code,
           thoroughly testing edge cases, or carefully reading through annotation guidelines.
           I pick things up quickly and enjoy the process of continuous improvement.
         </p>
-        <p>
+        <p lang="zh">
+          我特别在意<strong>细节的正确性</strong>——无论是写干净的代码、充分测试边界情况、还是仔细研读标注规范文档。
+          学东西上手快，喜欢在持续改进的过程中获得正反馈。
+        </p>
+        <p lang="en">
           Right now I'm looking for <strong>data annotation and AI training opportunities</strong> where I can
           put my bilingual skills, technical mindset, and attention to detail to practical use while
           continuing to grow as a developer.
+        </p>
+        <p lang="zh">
+          目前正在寻找<strong>数据标注和 AI 训练方向的实践机会</strong>，
+          希望能把双语能力、技术思维和细节意识转化为实际产出，同时继续积累开发经验。
         </p>
       </div>
     </div>
@@ -300,49 +329,49 @@
 <!-- ═══════════ SKILLS ═══════════ -->
 <section class="section section-alt" id="skills">
   <div class="section-inner">
-    <p class="section-label">Skills</p>
-    <h2 class="section-title">What I'm good at</h2>
+    <p class="section-label"><span lang="en">Skills</span><span lang="zh">技能</span></p>
+    <h2 class="section-title"><span lang="en">What I bring</span><span lang="zh">我的技能栈</span></h2>
     <div class="skills-grid">
       <div class="skill-cat fade-in">
-        <h3><span class="dot" style="background:var(--primary);"></span> Programming</h3>
+        <h3><span class="dot" style="background:var(--primary);"></span> <span lang="en">Programming</span><span lang="zh">编程语言</span></h3>
         <div class="skill-tags">
           <span class="skill-tag">Python</span>
           <span class="skill-tag">JavaScript</span>
           <span class="skill-tag">HTML &amp; CSS</span>
           <span class="skill-tag">Java</span>
           <span class="skill-tag">SQL</span>
-          <span class="skill-tag">React (learning)</span>
-          <span class="skill-tag">Node.js (learning)</span>
+          <span class="skill-tag"><span lang="en">React (learning)</span><span lang="zh">React（学习中）</span></span>
+          <span class="skill-tag"><span lang="en">Node.js (learning)</span><span lang="zh">Node.js（学习中）</span></span>
         </div>
       </div>
       <div class="skill-cat fade-in">
-        <h3><span class="dot" style="background:#5a8a7a;"></span> Languages</h3>
+        <h3><span class="dot" style="background:#5a8a7a;"></span> <span lang="en">Languages</span><span lang="zh">语言能力</span></h3>
         <div class="skill-tags">
-          <span class="skill-tag lang">Chinese — Native</span>
-          <span class="skill-tag lang">English — Fluent</span>
-          <span class="skill-tag lang">Cantonese — Conversational</span>
+          <span class="skill-tag lang"><span lang="en">Chinese — Native</span><span lang="zh">中文 — 母语</span></span>
+          <span class="skill-tag lang"><span lang="en">English — Fluent</span><span lang="zh">英语 — 流利</span></span>
+          <span class="skill-tag lang"><span lang="en">Cantonese — Conversational</span><span lang="zh">粤语 — 日常交流</span></span>
         </div>
       </div>
       <div class="skill-cat fade-in">
-        <h3><span class="dot" style="background:#6b8e6b;"></span> Tools &amp; Workflow</h3>
+        <h3><span class="dot" style="background:#6b8e6b;"></span> <span lang="en">Tools &amp; Workflow</span><span lang="zh">工具与工作流</span></h3>
         <div class="skill-tags">
           <span class="skill-tag tool">Git &amp; GitHub</span>
           <span class="skill-tag tool">VS Code</span>
           <span class="skill-tag tool">Jupyter Notebook</span>
-          <span class="skill-tag tool">Linux (WSL)</span>
-          <span class="skill-tag tool">Figma (basics)</span>
+          <span class="skill-tag tool"><span lang="en">Linux (WSL)</span><span lang="zh">Linux (WSL)</span></span>
+          <span class="skill-tag tool"><span lang="en">Figma (basics)</span><span lang="zh">Figma（基础）</span></span>
           <span class="skill-tag tool">Postman</span>
         </div>
       </div>
       <div class="skill-cat fade-in">
-        <h3><span class="dot" style="background:#b3924e;"></span> Strengths</h3>
+        <h3><span class="dot" style="background:#b3924e;"></span> <span lang="en">Strengths</span><span lang="zh">个人优势</span></h3>
         <div class="skill-tags">
-          <span class="skill-tag soft">Attention to Detail</span>
-          <span class="skill-tag soft">Fast Learner</span>
-          <span class="skill-tag soft">Analytical Thinking</span>
-          <span class="skill-tag soft">Clear Communication</span>
-          <span class="skill-tag soft">Self-Motivated</span>
-          <span class="skill-tag soft">Problem Solving</span>
+          <span class="skill-tag soft"><span lang="en">Attention to Detail</span><span lang="zh">注重细节</span></span>
+          <span class="skill-tag soft"><span lang="en">Fast Learner</span><span lang="zh">学习能力强</span></span>
+          <span class="skill-tag soft"><span lang="en">Analytical Thinking</span><span lang="zh">分析思维</span></span>
+          <span class="skill-tag soft"><span lang="en">Clear Communication</span><span lang="zh">清晰沟通</span></span>
+          <span class="skill-tag soft"><span lang="en">Self-Motivated</span><span lang="zh">自驱力强</span></span>
+          <span class="skill-tag soft"><span lang="en">Problem Solving</span><span lang="zh">解决问题</span></span>
         </div>
       </div>
     </div>
@@ -352,27 +381,37 @@
 <!-- ═══════════ EDUCATION ═══════════ -->
 <section class="section" id="education">
   <div class="section-inner">
-    <p class="section-label">Education &amp; Learning</p>
-    <h2 class="section-title">How I'm building my foundation</h2>
+    <p class="section-label"><span lang="en">Education &amp; Learning</span><span lang="zh">学习经历</span></p>
+    <h2 class="section-title"><span lang="en">How I'm building my foundation</span><span lang="zh">我的学习之路</span></h2>
     <div class="timeline">
       <div class="tl-item fade-in">
-        <h4>B.Sc. in Computer Science</h4>
-        <p class="tl-org">UESTC, Zhongshan Institute</p>
-        <p class="tl-date">Sep 2023 — Present (Junior Year)</p>
-        <ul>
+        <h4><span lang="en">B.Sc. in Computer Science</span><span lang="zh">计算机科学 本科</span></h4>
+        <p class="tl-org"><span lang="en">UESTC, Zhongshan Institute</span><span lang="zh">电子科技大学中山学院</span></p>
+        <p class="tl-date"><span lang="en">Sep 2023 — Present (Junior Year)</span><span lang="zh">2023年9月 — 至今（大三）</span></p>
+        <ul lang="en">
           <li>Core coursework: Data Structures &amp; Algorithms, Database Systems, Operating Systems, Computer Networks, Software Engineering</li>
           <li>Self-studying: Machine Learning fundamentals, NLP concepts, and LLM training pipelines</li>
           <li>Actively participating in coding practice platforms (LeetCode, Kaggle) to sharpen problem-solving skills</li>
         </ul>
+        <ul lang="zh">
+          <li>核心课程：数据结构与算法、数据库系统、操作系统、计算机网络、软件工程</li>
+          <li>自学方向：机器学习基础、自然语言处理概念、大语言模型训练流程</li>
+          <li>在 LeetCode、Kaggle 等平台上持续练习，锻炼编程和问题解决能力</li>
+        </ul>
       </div>
       <div class="tl-item fade-in">
-        <h4>Self-Directed Learning</h4>
-        <p class="tl-org">Online &amp; Open Source</p>
-        <p class="tl-date">Ongoing</p>
-        <ul>
+        <h4><span lang="en">Self-Directed Learning</span><span lang="zh">自主学习</span></h4>
+        <p class="tl-org"><span lang="en">Online &amp; Open Source</span><span lang="zh">在线学习 / 开源社区</span></p>
+        <p class="tl-date"><span lang="en">Ongoing</span><span lang="zh">持续进行</span></p>
+        <ul lang="en">
           <li>Completed 150+ hours of online coursework in Python, web development, and AI/ML foundations</li>
           <li>Building small personal projects to bridge the gap between coursework and real-world development</li>
           <li>Reading research papers and technical blogs to stay current with AI industry trends</li>
+        </ul>
+        <ul lang="zh">
+          <li>完成了 150+ 小时的在线课程学习，涵盖 Python、Web 开发和 AI/ML 基础</li>
+          <li>通过动手做个人项目，将课堂知识转化为实际开发能力</li>
+          <li>持续阅读研究论文和技术博客，关注 AI 行业最新动态</li>
         </ul>
       </div>
     </div>
@@ -382,42 +421,54 @@
 <!-- ═══════════ PROJECTS ═══════════ -->
 <section class="section section-alt" id="projects">
   <div class="section-inner">
-    <p class="section-label">Projects</p>
-    <h2 class="section-title">Things I've built</h2>
+    <p class="section-label"><span lang="en">Projects</span><span lang="zh">项目</span></p>
+    <h2 class="section-title"><span lang="en">Things I've built</span><span lang="zh">我做过的项目</span></h2>
     <div class="projects-grid">
-      <div class="project-card fade-in">
+      <a href="https://github.com/lklkmcgill/algo-visualizer" class="project-card fade-in" target="_blank">
         <div class="tag-row">
-          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span>
+          <span class="tag">Python</span><span class="tag">Matplotlib</span><span class="tag">NumPy</span>
         </div>
-        <h4>Campus Resource Sharing Platform</h4>
-        <p>
-          A full-stack web app that lets students share and borrow textbooks, notes, and study materials.
-          Features user auth, search, reservation tracking, and a clean responsive UI. Built as a
-          semester project with real users on campus.
+        <h4><span lang="en">Algo Visualizer</span><span lang="zh">算法可视化</span></h4>
+        <p lang="en">
+          Interactive visualization of classic sorting algorithms (Bubble, Quick, Merge, Insertion)
+          and binary search tree operations with traversal highlighting. Built with matplotlib
+          animations — useful for CS students learning data structures.
         </p>
-      </div>
-      <div class="project-card fade-in">
+        <p lang="zh">
+          经典排序算法（冒泡、快排、归并、插入）和二叉搜索树遍历的交互式可视化。
+          用 matplotlib 动画实现，适合用来理解数据结构和算法的工作原理。
+        </p>
+      </a>
+      <a href="https://github.com/lklkmcgill/campus-crawler" class="project-card fade-in" target="_blank">
         <div class="tag-row">
-          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+          <span class="tag">Python</span><span class="tag">BeautifulSoup</span><span class="tag">Flask</span>
         </div>
-        <h4>Data Analysis Toolkit</h4>
-        <p>
-          A collection of Python scripts for cleaning, analyzing, and visualizing datasets.
-          Used to process survey results for a student research project, generating
-          statistical summaries and publication-ready charts with detailed annotations.
+        <h4><span lang="en">Campus Crawler</span><span lang="zh">校园爬虫</span></h4>
+        <p lang="en">
+          A configurable web scraper that fetches university news and announcements,
+          with JSON-based storage, deduplication, and a Flask-powered web interface
+          for browsing and searching crawled content.
         </p>
-      </div>
-      <div class="project-card fade-in">
+        <p lang="zh">
+          可配置的校园通知爬虫，支持 JSON 本地存储和去重，附带 Flask Web 界面用于浏览和搜索。
+          练手 requests + BeautifulSoup 的实战项目。
+        </p>
+      </a>
+      <a href="https://github.com/lklkmcgill/marknote" class="project-card fade-in" target="_blank">
         <div class="tag-row">
-          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Responsive</span>
+          <span class="tag">Python</span><span class="tag">CLI</span><span class="tag">Rich</span>
         </div>
-        <h4>Personal Portfolio Site</h4>
-        <p>
-          This very site — designed and coded from scratch with a focus on clean typography,
-          responsive layout, and accessible markup. A living project that evolves as I learn
-          new techniques and refine my design sense.
+        <h4><span lang="en">MarkNote</span><span lang="zh">MarkNote</span></h4>
+        <p lang="en">
+          A lightweight command-line note-taking tool with Markdown rendering in the terminal.
+          Features CRUD operations, tag management, full-text search, and trash/undo support.
+          All notes stored as plain .md files — no database required.
         </p>
-      </div>
+        <p lang="zh">
+          轻量命令行笔记工具，支持终端内 Markdown 渲染。包含 CRUD、标签管理、全文搜索和回收站功能。
+          笔记以纯 .md 文件存储，无需数据库，搬家直接拷目录。
+        </p>
+      </a>
     </div>
   </div>
 </section>
@@ -425,35 +476,65 @@
 <!-- ═══════════ CONTACT ═══════════ -->
 <section class="section" id="contact">
   <div class="section-inner">
-    <p class="section-label">Contact</p>
-    <h2 class="section-title">Let's talk</h2>
+    <p class="section-label"><span lang="en">Contact</span><span lang="zh">联系我</span></p>
+    <h2 class="section-title"><span lang="en">Let's talk</span><span lang="zh">欢迎联系</span></h2>
     <div class="contact-grid">
       <a href="mailto:shizhimen@gmail.com" class="contact-item fade-in">
         <div class="ci-icon email">✉</div>
-        <div><div class="ci-label">Email</div><div class="ci-value">shizhimen@gmail.com</div></div>
+        <div>
+          <div class="ci-label"><span lang="en">Email</span><span lang="zh">邮箱</span></div>
+          <div class="ci-value">shizhimen@gmail.com</div>
+        </div>
       </a>
       <a href="https://github.com/lklkmcgill" class="contact-item fade-in" target="_blank">
         <div class="ci-icon github">⌹</div>
-        <div><div class="ci-label">GitHub</div><div class="ci-value">@lklkmcgill</div></div>
+        <div>
+          <div class="ci-label">GitHub</div>
+          <div class="ci-value">@lklkmcgill</div>
+        </div>
       </a>
       <div class="contact-item fade-in">
         <div class="ci-icon location">⌂</div>
-        <div><div class="ci-label">Location</div><div class="ci-value">Zhongshan, China</div></div>
+        <div>
+          <div class="ci-label"><span lang="en">Location</span><span lang="zh">所在地</span></div>
+          <div class="ci-value"><span lang="en">Zhongshan, China</span><span lang="zh">中国 中山</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <footer class="footer">
-  &copy; 2026 Songheng Huang. Designed with care.
+  <span lang="en">&copy; 2026 Songheng Huang. Designed with care.</span>
+  <span lang="zh">&copy; 2026 黄松恒. 用心设计与编写.</span>
 </footer>
 
 <script>
+  // ── LANGUAGE SWITCHER ──
+  const LANG_KEY = 'profile-lang';
+
+  function setLang(lang) {
+    document.documentElement.setAttribute('lang', lang);
+    document.getElementById('langToggle').textContent = lang === 'en' ? '中文' : 'EN';
+    localStorage.setItem(LANG_KEY, lang);
+  }
+
+  // init from localStorage, default en
+  const saved = localStorage.getItem(LANG_KEY) || 'en';
+  setLang(saved);
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('lang');
+    setLang(cur === 'en' ? 'zh' : 'en');
+  });
+
+  // ── NAV SCROLL SHADOW ──
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 10);
   });
 
+  // ── MOBILE NAV TOGGLE ──
   const toggle = document.getElementById('navToggle');
   const navLinks = document.getElementById('navLinks');
   toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
@@ -461,6 +542,7 @@
     a.addEventListener('click', () => navLinks.classList.remove('open'));
   });
 
+  // ── ACTIVE NAV LINK ──
   const sections = document.querySelectorAll('section[id]');
   const navAs = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
@@ -473,6 +555,7 @@
     });
   });
 
+  // ── SCROLL FADE-IN ──
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
