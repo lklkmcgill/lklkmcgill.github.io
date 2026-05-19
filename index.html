@@ -43,9 +43,8 @@
   }
 
   /* ── LANGUAGE VISIBILITY ── */
-  [lang] { display: none; }
-  html[lang="en"] [lang="en"],
-  html[lang="zh"] [lang="zh"] { display: revert; }
+  html[lang="en"] [lang="zh"],
+  html[lang="zh"] [lang="en"] { display: none; }
 
   /* ── NAV ───────────────────── */
   .nav {
