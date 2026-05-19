@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Songheng Huang — CS Undergraduate Profile">
+<title>Songheng Huang — Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --text: #3d3a35;
+    --text-2: #7d7870;
+    --text-3: #b0aba3;
+    --border: #eae6df;
+    --primary: #6b8e6b;
+    --primary-lt: #f2f6f1;
+    --accent: #8ba89b;
+    --accent-lt: #f0f5f2;
+    --warm: #c4a96e;
+    --warm-lt: #faf7f0;
+    --radius: 14px;
+    --radius-sm: 10px;
+    --shadow: 0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.03);
+    --shadow-md: 0 4px 8px rgba(0,0,0,.04),0 2px 4px rgba(0,0,0,.03);
+    --shadow-lg: 0 12px 28px rgba(0,0,0,.05),0 4px 10px rgba(0,0,0,.03);
+    --max-w: 1000px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+  body {
+    font-family: 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAV ───────────────────── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(250,249,246,.88); backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow .35s;
+  }
+  .nav.scrolled { box-shadow: var(--shadow-md); }
+  .nav-inner {
+    max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+    display: flex; align-items: center; justify-content: space-between; height: 60px;
+  }
+  .nav-logo { font-weight: 700; font-size: 1.1rem; color: var(--primary); letter-spacing: -.01em; }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    text-decoration: none; color: var(--text-2); font-size: .85rem; font-weight: 500;
+    transition: color .25s; position: relative;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--primary); }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px;
+    background: var(--primary); border-radius: 1px; transition: width .3s;
+  }
+  .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+  .nav-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
+  .nav-toggle span { display: block; width: 22px; height: 2px; background: var(--text); margin: 5px 0; border-radius: 2px; transition: .25s; }
+
+  /* ── HERO ──────────────────── */
+  .hero {
+    padding: 140px 24px 80px;
+    background: linear-gradient(175deg, #faf9f6 0%, #f3f6f1 40%, #faf9f6 100%);
+    text-align: center;
+  }
+  .hero-avatar {
+    width: 112px; height: 112px; border-radius: 50%;
+    background: linear-gradient(135deg, #8ba89b, #6b8e6b);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 28px; font-size: 2.6rem; font-weight: 700; color: #fff;
+    box-shadow: 0 0 0 6px rgba(107,142,107,.10), var(--shadow-lg);
+    user-select: none;
+  }
+  .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; letter-spacing: -.03em; line-height: 1.15; color: var(--text); }
+  .hero h1 span { color: var(--primary); }
+  .hero .tagline { font-size: 1.1rem; color: var(--text-2); margin-top: 14px; max-width: 540px; margin-inline: auto; line-height: 1.65; }
+  .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+  .hero-badges .badge {
+    padding: 6px 18px; border-radius: 99px; font-size: .8rem; font-weight: 600;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text-2);
+  }
+
+  /* ── SECTIONS ──────────────── */
+  .section { padding: 88px 24px; }
+  .section-alt { background: var(--surface); }
+  .section-inner { max-width: var(--max-w); margin: 0 auto; }
+  .section-label {
+    font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em;
+    color: var(--primary); margin-bottom: 8px;
+  }
+  .section-title { font-size: clamp(1.5rem, 3.5vw, 2rem); font-weight: 700; letter-spacing: -.02em; margin-bottom: 44px; color: var(--text); }
+
+  /* ── ABOUT ─────────────────── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 48px; align-items: start; }
+  .about-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 32px; box-shadow: var(--shadow);
+  }
+  .about-card h3 { font-size: 1.05rem; margin-bottom: 4px; color: var(--text); }
+  .about-card .meta { color: var(--text-3); font-size: .85rem; margin-bottom: 18px; }
+  .info-rows { display: grid; gap: 12px; margin-top: 20px; }
+  .info-row { display: flex; align-items: center; gap: 10px; font-size: .88rem; color: var(--text-2); }
+  .info-row .icon { width: 20px; color: var(--primary); font-weight: 600; flex-shrink: 0; text-align: center; }
+  .about-text p { margin-bottom: 16px; color: var(--text-2); font-size: .93rem; }
+  .about-text p:last-child { margin-bottom: 0; }
+
+  /* ── SKILLS ────────────────── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .skill-cat {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; box-shadow: var(--shadow);
+  }
+  .skill-cat h3 { font-size: .95rem; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; color: var(--text); }
+  .skill-cat h3 .dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag {
+    padding: 5px 14px; border-radius: 99px; font-size: .78rem; font-weight: 500;
+    background: var(--primary-lt); color: var(--primary);
+  }
+  .skill-tag.lang { background: var(--accent-lt); color: #5a8a7a; }
+  .skill-tag.tool { background: #f1f6f0; color: #6b8e6b; }
+  .skill-tag.soft  { background: var(--warm-lt); color: #b3924e; }
+
+  /* ── EDUCATION TIMELINE ────── */
+  .timeline { position: relative; padding-left: 32px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 4px; bottom: 4px;
+    width: 1.5px; background: var(--border); border-radius: 1px;
+  }
+  .tl-item { position: relative; margin-bottom: 38px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-item::before {
+    content: ''; position: absolute; left: -27px; top: 7px;
+    width: 10px; height: 10px; border-radius: 50%; background: var(--primary);
+    box-shadow: 0 0 0 5px var(--primary-lt);
+  }
+  .tl-item h4 { font-size: 1.02rem; font-weight: 600; color: var(--text); }
+  .tl-item .tl-org { color: var(--primary); font-weight: 600; font-size: .88rem; }
+  .tl-item .tl-date { color: var(--text-3); font-size: .78rem; margin-bottom: 6px; }
+  .tl-item p { color: var(--text-2); font-size: .88rem; }
+  .tl-item ul { margin-top: 8px; padding-left: 20px; }
+  .tl-item li { color: var(--text-2); font-size: .85rem; margin-bottom: 3px; }
+
+  /* ── PROJECTS ──────────────── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+  .project-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 28px; box-shadow: var(--shadow); transition: transform .3s, box-shadow .3s;
+    cursor: default;
+  }
+  .project-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  .project-card .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .project-card .tag {
+    padding: 3px 10px; border-radius: 99px; font-size: .7rem; font-weight: 600;
+    background: var(--primary-lt); color: var(--primary);
+  }
+  .project-card h4 { font-size: 1.02rem; margin-bottom: 6px; color: var(--text); }
+  .project-card p { color: var(--text-2); font-size: .85rem; line-height: 1.65; }
+
+  /* ── CONTACT ───────────────── */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+  .contact-item {
+    display: flex; align-items: center; gap: 14px; padding: 20px 24px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
+    text-decoration: none; color: var(--text); box-shadow: var(--shadow);
+    transition: border-color .25s, box-shadow .25s;
+  }
+  .contact-item:hover { border-color: var(--primary); box-shadow: var(--shadow-md); }
+  .contact-item .ci-icon {
+    width: 42px; height: 42px; border-radius: var(--radius-sm); display: flex;
+    align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+  }
+  .ci-icon.email    { background: var(--primary-lt); }
+  .ci-icon.linkedin { background: var(--accent-lt); }
+  .ci-icon.github   { background: #f3f4f0; }
+  .ci-icon.location { background: #f0f5ef; }
+  .ci-label  { font-size: .73rem; color: var(--text-3); }
+  .ci-value  { font-size: .88rem; font-weight: 600; color: var(--text); }
+
+  /* ── FOOTER ────────────────── */
+  .footer { text-align: center; padding: 40px 24px; border-top: 1px solid var(--border); color: var(--text-3); font-size: .8rem; }
+
+  /* ── ANIMATIONS ────────────── */
+  .fade-in { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ────────────── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; position: absolute; top: 60px; left: 0; right: 0;
+      flex-direction: column; background: var(--surface); border-bottom: 1px solid var(--border);
+      padding: 16px 24px; gap: 12px; box-shadow: var(--shadow-lg);
+    }
+    .nav-links.open { display: flex; }
+    .nav-toggle { display: block; }
+    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .hero { padding: 110px 20px 60px; }
+    .section { padding: 60px 20px; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .hero-avatar { width: 96px; height: 96px; font-size: 2.2rem; }
+    .hero h1 { font-size: 1.75rem; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  @media print {
+    .nav, .footer { display: none; }
+    body { font-size: 12px; color: #000; background: #fff; }
+    .hero { padding: 40px 0 20px; background: none; }
+    .section { padding: 24px 0; }
+    .skill-cat, .project-card, .about-card, .contact-item { box-shadow: none; border: 1px solid #ddd; }
+    .fade-in { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">SH</div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══════════ HERO ═══════════ -->
+<header class="hero">
+  <div class="hero-avatar">SH</div>
+  <h1>Songheng <span>Huang</span></h1>
+  <p class="tagline">
+    Third-year CS undergraduate with a sharp eye for detail and a drive to build things that matter.
+    Bilingual in Chinese and English. Currently seeking hands-on opportunities in AI data annotation and software development.
+  </p>
+  <div class="hero-badges">
+    <span class="badge">CS Undergraduate</span>
+    <span class="badge">CN / EN Bilingual</span>
+    <span class="badge">Python &amp; Web</span>
+    <span class="badge">Open to Opportunities</span>
+  </div>
+</header>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section class="section" id="about">
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2 class="section-title">Who I am</h2>
+    <div class="about-grid">
+      <div class="about-card fade-in">
+        <h3>Songheng Huang</h3>
+        <p class="meta">Computer Science Undergraduate</p>
+        <div class="info-rows">
+          <div class="info-row"><span class="icon">@</span> shizhimen@gmail.com</div>
+          <div class="info-row"><span class="icon">#</span> Zhongshan, Guangdong, China</div>
+          <div class="info-row"><span class="icon">⌹</span> github.com/lklkmcgill</div>
+        </div>
+      </div>
+      <div class="about-text fade-in">
+        <p>
+          I'm a <strong>third-year Computer Science student</strong> based in Zhongshan, China.
+          I spend most of my time honing programming fundamentals, exploring how AI models are trained,
+          and building small but functional projects that solve real problems.
+        </p>
+        <p>
+          I care a lot about <strong>getting the details right</strong> — whether it's writing clean code,
+          thoroughly testing edge cases, or carefully reading through annotation guidelines.
+          I pick things up quickly and enjoy the process of continuous improvement.
+        </p>
+        <p>
+          Right now I'm looking for <strong>data annotation and AI training opportunities</strong> where I can
+          put my bilingual skills, technical mindset, and attention to detail to practical use while
+          continuing to grow as a developer.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ SKILLS ═══════════ -->
+<section class="section section-alt" id="skills">
+  <div class="section-inner">
+    <p class="section-label">Skills</p>
+    <h2 class="section-title">What I'm good at</h2>
+    <div class="skills-grid">
+      <div class="skill-cat fade-in">
+        <h3><span class="dot" style="background:var(--primary);"></span> Programming</h3>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">HTML &amp; CSS</span>
+          <span class="skill-tag">Java</span>
+          <span class="skill-tag">SQL</span>
+          <span class="skill-tag">React (learning)</span>
+          <span class="skill-tag">Node.js (learning)</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-in">
+        <h3><span class="dot" style="background:#5a8a7a;"></span> Languages</h3>
+        <div class="skill-tags">
+          <span class="skill-tag lang">Chinese — Native</span>
+          <span class="skill-tag lang">English — Fluent</span>
+          <span class="skill-tag lang">Cantonese — Conversational</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-in">
+        <h3><span class="dot" style="background:#6b8e6b;"></span> Tools &amp; Workflow</h3>
+        <div class="skill-tags">
+          <span class="skill-tag tool">Git &amp; GitHub</span>
+          <span class="skill-tag tool">VS Code</span>
+          <span class="skill-tag tool">Jupyter Notebook</span>
+          <span class="skill-tag tool">Linux (WSL)</span>
+          <span class="skill-tag tool">Figma (basics)</span>
+          <span class="skill-tag tool">Postman</span>
+        </div>
+      </div>
+      <div class="skill-cat fade-in">
+        <h3><span class="dot" style="background:#b3924e;"></span> Strengths</h3>
+        <div class="skill-tags">
+          <span class="skill-tag soft">Attention to Detail</span>
+          <span class="skill-tag soft">Fast Learner</span>
+          <span class="skill-tag soft">Analytical Thinking</span>
+          <span class="skill-tag soft">Clear Communication</span>
+          <span class="skill-tag soft">Self-Motivated</span>
+          <span class="skill-tag soft">Problem Solving</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ EDUCATION ═══════════ -->
+<section class="section" id="education">
+  <div class="section-inner">
+    <p class="section-label">Education &amp; Learning</p>
+    <h2 class="section-title">How I'm building my foundation</h2>
+    <div class="timeline">
+      <div class="tl-item fade-in">
+        <h4>B.Sc. in Computer Science</h4>
+        <p class="tl-org">UESTC, Zhongshan Institute</p>
+        <p class="tl-date">Sep 2023 — Present (Junior Year)</p>
+        <ul>
+          <li>Core coursework: Data Structures &amp; Algorithms, Database Systems, Operating Systems, Computer Networks, Software Engineering</li>
+          <li>Self-studying: Machine Learning fundamentals, NLP concepts, and LLM training pipelines</li>
+          <li>Actively participating in coding practice platforms (LeetCode, Kaggle) to sharpen problem-solving skills</li>
+        </ul>
+      </div>
+      <div class="tl-item fade-in">
+        <h4>Self-Directed Learning</h4>
+        <p class="tl-org">Online &amp; Open Source</p>
+        <p class="tl-date">Ongoing</p>
+        <ul>
+          <li>Completed 150+ hours of online coursework in Python, web development, and AI/ML foundations</li>
+          <li>Building small personal projects to bridge the gap between coursework and real-world development</li>
+          <li>Reading research papers and technical blogs to stay current with AI industry trends</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROJECTS ═══════════ -->
+<section class="section section-alt" id="projects">
+  <div class="section-inner">
+    <p class="section-label">Projects</p>
+    <h2 class="section-title">Things I've built</h2>
+    <div class="projects-grid">
+      <div class="project-card fade-in">
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Flask</span><span class="tag">SQLite</span>
+        </div>
+        <h4>Campus Resource Sharing Platform</h4>
+        <p>
+          A full-stack web app that lets students share and borrow textbooks, notes, and study materials.
+          Features user auth, search, reservation tracking, and a clean responsive UI. Built as a
+          semester project with real users on campus.
+        </p>
+      </div>
+      <div class="project-card fade-in">
+        <div class="tag-row">
+          <span class="tag">Python</span><span class="tag">Pandas</span><span class="tag">Matplotlib</span>
+        </div>
+        <h4>Data Analysis Toolkit</h4>
+        <p>
+          A collection of Python scripts for cleaning, analyzing, and visualizing datasets.
+          Used to process survey results for a student research project, generating
+          statistical summaries and publication-ready charts with detailed annotations.
+        </p>
+      </div>
+      <div class="project-card fade-in">
+        <div class="tag-row">
+          <span class="tag">HTML/CSS</span><span class="tag">JavaScript</span><span class="tag">Responsive</span>
+        </div>
+        <h4>Personal Portfolio Site</h4>
+        <p>
+          This very site — designed and coded from scratch with a focus on clean typography,
+          responsive layout, and accessible markup. A living project that evolves as I learn
+          new techniques and refine my design sense.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section class="section" id="contact">
+  <div class="section-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Let's talk</h2>
+    <div class="contact-grid">
+      <a href="mailto:shizhimen@gmail.com" class="contact-item fade-in">
+        <div class="ci-icon email">✉</div>
+        <div><div class="ci-label">Email</div><div class="ci-value">shizhimen@gmail.com</div></div>
+      </a>
+      <a href="https://github.com/lklkmcgill" class="contact-item fade-in" target="_blank">
+        <div class="ci-icon github">⌹</div>
+        <div><div class="ci-label">GitHub</div><div class="ci-value">@lklkmcgill</div></div>
+      </a>
+      <div class="contact-item fade-in">
+        <div class="ci-icon location">⌂</div>
+        <div><div class="ci-label">Location</div><div class="ci-value">Zhongshan, China</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  &copy; 2026 Songheng Huang. Designed with care.
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 10);
+  });
+
+  const toggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
+  });
+
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id');
+    });
+    navAs.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
