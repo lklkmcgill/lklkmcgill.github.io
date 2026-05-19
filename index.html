@@ -238,10 +238,19 @@
     .section { padding: 24px 0; }
     .skill-cat, .project-card, .about-card, .contact-item { box-shadow: none; border: 1px solid #ddd; }
     .fade-in { opacity: 1; transform: none; }
+    #bgCanvas { display: none; }
+  }
+
+  /* ── AMBIENT BG CANVAS ── */
+  #bgCanvas {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
   }
 </style>
 </head>
 <body>
+
+<canvas id="bgCanvas"></canvas>
 
 <!-- ═══════════ NAV ═══════════ -->
 <nav class="nav" id="nav">
@@ -561,6 +570,79 @@
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // ── AMBIENT PARTICLES ──
+  (function() {
+    const canvas = document.getElementById('bgCanvas');
+    if (!canvas || !canvas.getContext) return;
+    const ctx = canvas.getContext('2d');
+    let w, h, particles;
+    const PALETTE = [
+      'rgba(107,142,107,',   // sage green
+      'rgba(139,168,155,',   // celadon
+      'rgba(196,169,110,',   // warm gold
+      'rgba(160,180,160,',
+      'rgba(180,170,140,',
+    ];
+
+    function resize() {
+      w = canvas.width  = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function createParticles(count) {
+      const ps = [];
+      for (let i = 0; i < count; i++) {
+        ps.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: 1.5 + Math.random() * 3.5,
+          vx: (Math.random() - 0.5) * 0.15,
+          vy: -0.08 - Math.random() * 0.25,
+          alpha: 0.06 + Math.random() * 0.14,
+          pulse: Math.random() * Math.PI * 2,
+          pulseSpeed: 0.003 + Math.random() * 0.008,
+          colorIdx: Math.floor(Math.random() * PALETTE.length),
+        });
+      }
+      return ps;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of particles) {
+        p.x += p.vx;
+        p.y += p.vy;
+        // wrap around
+        if (p.y < -10) { p.y = h + 10; p.x = Math.random() * w; }
+        if (p.x < -10) p.x = w + 10;
+        if (p.x > w + 10) p.x = -10;
+        // breathing opacity
+        const breath = Math.sin(p.pulse) * 0.06;
+        const a = Math.max(0.02, Math.min(0.25, p.alpha + breath));
+        p.pulse += p.pulseSpeed;
+        // draw
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = PALETTE[p.colorIdx] + a + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(draw);
+    }
+
+    resize();
+    particles = createParticles(35);
+    draw();
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        resize();
+        particles = createParticles(35);
+      }, 200);
+    });
+  })();
 </script>
 
 </body>
